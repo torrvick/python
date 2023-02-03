@@ -12,4 +12,3 @@ for elem in sp:
     if elem == x: 
         count +=1
 print(f"Число {x} встречается {count} раз")
-
