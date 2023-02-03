@@ -6,12 +6,11 @@
 from random import randint
 import time
 
-attempt_count = 100
-correct_count = 0
+check_statement = True
 start_time = 0
 end_time = 0
 start_time = time.time()
-for attempt in range(attempt_count):
+for attempt in range(100):
     pred_list = []
     for i in range(randint(5, 25)):
         pred_list.append(randint(0, 1))
@@ -22,9 +21,8 @@ for attempt in range(attempt_count):
         or_construct = or_construct or pred_list[i]
         and_construct = and_construct and not pred_list[i]
     or_construct = not or_construct
-    if or_construct == and_construct:
-        correct_count += 1
+    check_statement = check_statement and or_construct == and_construct
 end_time = time.time()
-if correct_count == attempt_count:
+if check_statement:
     print("Утверждение истинно")
 print(f"Проверка заняла {round((end_time - start_time)*1000,3)} миллисекунд")
