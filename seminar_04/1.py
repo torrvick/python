@@ -15,4 +15,5 @@ print(sp1)
 print(sp2)
 
 sp3 = [elem for elem in set(sp1) if elem in set(sp2)]
+sp3.sort()
 print(sp3)
