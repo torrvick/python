@@ -6,15 +6,13 @@
 
 from random import randint
 
-def spgenerate(size, min=0, max=10):
+def spgen(size, min=0, max=10):
     return [randint(min, max) for _ in range(size)]
 
-sp1 = spgenerate(int(input("Введите размер первого массива: ")))
-sp2 = spgenerate(int(input("Введите размер второго массива: ")))
+sp1 = spgen(int(input("Введите размер первого массива: ")))
+sp2 = spgen(int(input("Введите размер второго массива: ")))
 print(sp1)
 print(sp2)
 
 sp3 = [elem for elem in set(sp1) if elem in set(sp2)]
 print(sp3)
-
-
