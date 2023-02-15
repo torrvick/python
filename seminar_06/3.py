@@ -14,7 +14,7 @@ from random import randint
 sp_size = list(map(int,input("Введите размер массива через пробел (строки столбцы): ").split()))
 sp_rows = sp_size[0]
 sp_cols = sp_size[1]
-sp = [[randint(-10,10) for _ in range(sp_cols)] for _ in range(sp_rows)]
+sp = [[randint(0,10) for _ in range(sp_cols)] for _ in range(sp_rows)]
 # for el in sp:
 #     print(" ".join(list(map(str,el))))
 def print_array(array):
@@ -22,11 +22,15 @@ def print_array(array):
         for el in row:
             print("%3d" %(el), end = " ")
         print()
+        
 print("Исходный массив:")
 print_array(sp)
 print()
-def sort_array(array,rows,cols):
+
+def sort_array(array):
     array_temp = []
+    rows = len(array)
+    cols = len(array[0])
     for row in array:
         for el in row:
             array_temp.append(el)
@@ -40,4 +44,4 @@ def sort_array(array,rows,cols):
     return array
 
 print("Отсортированный массив:")
-print_array(sort_array(sp,sp_rows,sp_cols))
+print_array(sort_array(sp))

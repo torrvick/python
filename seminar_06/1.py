@@ -9,7 +9,7 @@ seq_step = int(input("Введите шаг прогрессии: "))
 seq_size = int(input("Введите количество элементов: "))
 seq = []
 
-for el in range(seq_start, seq_start+(seq_size-1)*seq_step+1, seq_step):
-    seq.append(el)
+for el in range(seq_size):
+    seq.append(seq_start+el*seq_step)
 
 print(seq)
