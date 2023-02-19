@@ -1,15 +1,21 @@
 import json 
 import random
- 
-base = '[\
-            {"Name": "Judas Priest","Style":"Heavy Metal", "Country":"GB", "Songs": ["Breaking the Law", "Painkiller", "Cheater", "Diamonds And Rust", "Rocka Rolla"]}, \
-            {"Name": "Mötley Crüe","Style":"Glam Metal", "Country":"USA", "Songs": ["Kickstart My Heart", "Saints of Los Angeles", "Take Me To The Top", "Home Sweet Home", "Merry-Go-Round"]},  \
-            {"Name": "Iron Maiden","Style":"Heavy Metal", "Country":"GB", "Songs": ["Fear Of The Dark", "The Trooper", "Wasting Love", "Hallowed Be Thy Name", "Run To The Hills"]}   \
-        ]' 
- 
 
-music = json.loads(base) 
+def load_base():
+    with open("base.json", "r", encoding="utf-8") as base:
+        global music 
+        music = json.load(base) 
 
+def save_base():
+    with open("base.json", "w", encoding="utf-8") as base:
+        base.write(json.dumps(music,ensure_ascii=False))
+
+try:
+    load_base()
+except:
+    print()
+    print("--- Ошибка загрузки файла данных ---")
+    exit()
 
 def show_bands():
     for band in music:
@@ -67,8 +73,9 @@ def select_songs(band_n = "", country_n = "", style_n = "", rnd = ""):
     input("Нажми Enter для возвращения в меню выбора")
 
 
-main_commands_available = ["/start","/stop", "/help", "/bands", "/countries", "/styles", "/play"]
+main_commands_available = ["/start","/stop", "/help", "/bands", "/countries", "/styles", "/play", "/add", "/show_base"]
 play_commands_available = ["/name", "/style", "/country", "/random", "/exit"]
+print()
 print("Привет! Я - музыкальный бот")
 while True:
     command = input("|Главное меню| / Введи команду: ")
@@ -93,12 +100,14 @@ while True:
         show_styles()
     if command == "/play":
         while True:
+            print()
             print("По какому критерию ты хочешь выбрать?")
             print("/name - по названию")
             print("/style - по стилю")
             print("/country - по стране")
             print("/random х - случайно выбрать x песен")
             print("/exit - выход из меню проигрывания")
+            print()
             command = input("|Меню проигрывания| / Введи команду: ")
             if command.split()[0] not in play_commands_available:
                 print("Неверная команда")
@@ -118,3 +127,26 @@ while True:
                 select_songs(country_n = country)
             if command.split()[0] == "/random":
                 select_songs(rnd = command.split()[1])
+    if command == "/add":
+        print("Добавление новой группы")
+        name = input("Введите название группы: ")
+        style = input("В каком стиле они играют? ")
+        country = input("Откуда эти ребята? ")
+        print("Добавьте их песни. Для окончания ввода введите пустую строку")
+        songs = []
+        while True:
+            song = input()
+            if song == "": break
+            else:
+                songs.append(song)
+        music.append({"Name": name, "Style": style, "Country": country, "Songs": songs})
+        try:
+            save_base()
+            print("Новая группа добавлена")
+        except:
+            print("Ошибка записи")
+    
+
+
+    if command == "/show_base":
+        print(json.dumps(music, indent=4))
